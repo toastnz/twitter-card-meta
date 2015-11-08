@@ -55,6 +55,12 @@ class TwitterCardMeta extends DataExtension {
         if ($this->owner->TwitterTitle == '') {
             $this->owner->TwitterTitle = $this->owner->Title;
         }
+        if ($this->owner->TwitterSite == '') {
+            $this->owner->TwitterSite = SiteConfig::current_site_config()->DefaultTwitterHandle;
+        }
+        if (!$this->owner->TwitterImageID) {
+            $this->owner->TwitterImageID = SiteConfig::current_site_config()->DefaultTwitterImage()->ID;
+        }
     }
 
     public function FirstImage() {

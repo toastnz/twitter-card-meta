@@ -1,3 +1,6 @@
 Page:
   extensions:
     - TwitterCardMeta
+SiteConfig:
+  extensions:
+    - TwitterSiteConfigExtension
