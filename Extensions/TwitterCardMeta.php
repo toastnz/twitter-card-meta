@@ -34,7 +34,6 @@ class TwitterCardMeta extends DataExtension {
         $fields->addFieldsToTab('Root.Main', ToggleCompositeField::create('Twitter Graph', 'Twitter Card',
             array(
                 LiteralField::create('', '<h2>&nbsp;&nbsp;&nbsp;Twitter Card <img style="position:relative;top:4px;left 4px;" src="' . Director::absoluteBaseURL() . 'twitter-card-meta/Images/twitter.png"></h2>'),
-                TextField::create('TwitterSite', 'Site Handle')->setAttribute('placeholder', 'e.g @sitename')->setRightTitle('Twitter account name for the site'),
                 TextField::create('TwitterCreator', 'Creator Handle')->setAttribute('placeholder', 'e.g @username')->setRightTitle('Twitter account name for the author/creator (Will default to site handle)'),
                 OptionsetField::create('TwitterCardType', 'Twitter Card Type', array(
                     'summary_large_image' => 'summary with large image',
