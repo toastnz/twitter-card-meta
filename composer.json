@@ -7,12 +7,12 @@
     "twitter card",
     "twitter"
   ],
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "authors": [
     {
       "name": "Jaydn de Graaf",
       "homepage": "http://pinc.nz/",
-      "role": "Developer"
+      "email": "jd@pinc.nz"
     }
   ],
   "require": {
