@@ -7,12 +7,19 @@
     "twitter card",
     "twitter"
   ],
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "authors": [
     {
       "name": "Jaydn de Graaf",
       "homepage": "http://pinc.nz/",
-      "email": "jd@pinc.nz"
+      "email": "jd@pinc.nz",
+      "role": "Tall Guy"
+    },
+    {
+      "name": "Danae Miller-Clendon",
+      "homepage": "http://toast.co.nz/",
+      "email": "danae@toast.co.nz",
+      "role": "Token Chick"
     }
   ],
   "require": {
