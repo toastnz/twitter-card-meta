@@ -1,4 +1,6 @@
 # Contributing
 
-If you have any changes or contributions feel free to submit any requests to the repo or send me a message via [Email](mailto:jd@pinc.nz).
+Bug fixes can be sent through via pull request. Read [GitHub's official documentation](https://help.github.com/articles/using-pull-requests/) for more information.
+
+If you have any feature suggestions, bug reports, or questions, submit an issue with the appropriate label.
 
