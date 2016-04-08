@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Pinc
+ * Class TwitterCardMeta
  */
 class TwitterCardMeta extends DataExtension {
 
@@ -9,11 +9,11 @@ class TwitterCardMeta extends DataExtension {
 	 * @var array
 	 */
 	private static $db = array(
-		'TwitterSite' => 'varchar(160)',
-		'TwitterCreator' => 'varchar(160)',
-		'TwitterTitle' => 'varchar(160)',
-		'TwitterCardType' => 'varchar(160)',
-		'TwitterDescription' => 'varchar(160)'
+		'TwitterSite' => 'Varchar(160)',
+		'TwitterCreator' => 'Varchar(160)',
+		'TwitterTitle' => 'Varchar(160)',
+		'TwitterCardType' => 'Varchar(160)',
+		'TwitterDescription' => 'Varchar(160)'
 	);
 
 	/**
@@ -21,7 +21,6 @@ class TwitterCardMeta extends DataExtension {
 	 */
 	private static $has_one = array(
 		'TwitterImage' => 'Image'
-
 	);
 
 	/**
@@ -68,14 +67,17 @@ class TwitterCardMeta extends DataExtension {
 		}
 	}
 
+    /**
+     * @return string
+     */
 	public function FirstImage() {
 		$pattern = ' /<img[^>]+ src[\\s = \'"]';
 		$pattern .= '+([^"\'>\\s]+)/is';
 		if (preg_match_all($pattern, $this->owner->Content, $match)) {
 			$imageLink = preg_replace('/_resampled\/resizedimage[0-9]*-/', '', $match[1][0]);
-			return (string) $imageLink;
+			return (string)$imageLink;
 		} else {
-			return;
+			return '';
 		}
 	}
 

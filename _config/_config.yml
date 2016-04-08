@@ -1,3 +1,7 @@
+---
+Name: twittercardmeta
+After: 'framework/*','cms/*'
+---
 Page:
   extensions:
     - TwitterCardMeta
