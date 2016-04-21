@@ -2,6 +2,11 @@
 
 /**
  * Class TwitterSiteConfigExtension
+ *
+ * @property string DefaultTwitterHandle
+ * @property int DefaultTwitterImageID
+ *
+ * @method Image DefaultTwitterImage
  */
 class TwitterSiteConfigExtension extends DataExtension {
 

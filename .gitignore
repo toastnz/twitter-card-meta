@@ -6,5 +6,4 @@
 /.idea
 /framework/
 /cms/
-composer.lock
 /vendor/

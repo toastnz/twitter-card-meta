@@ -2,7 +2,7 @@
 Name: twittercardmeta
 After: 'framework/*','cms/*'
 ---
-Page:
+SiteTree:
   extensions:
     - TwitterCardMeta
 SiteConfig:
