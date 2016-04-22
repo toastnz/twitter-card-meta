@@ -4,11 +4,12 @@
  * Class TwitterSiteConfigExtension
  *
  * @property string DefaultTwitterHandle
- * @property int DefaultTwitterImageID
+ * @property int    DefaultTwitterImageID
  *
  * @method Image DefaultTwitterImage
  */
-class TwitterSiteConfigExtension extends DataExtension {
+class TwitterSiteConfigExtension extends DataExtension
+{
 
     private static $db = array(
         'DefaultTwitterHandle' => 'Varchar(255)'
@@ -21,7 +22,11 @@ class TwitterSiteConfigExtension extends DataExtension {
     /**
      * @param FieldList $fields
      */
-    public function updateCMSFields(FieldList $fields) {
+    public function updateCMSFields(FieldList $fields)
+    {
+        /** =========================================
+         * @var UploadField $twitterImage
+        ===========================================*/
 
         if (!$fields->fieldByName('Root.Settings')) {
             $fields->addFieldToTab('Root', TabSet::create('Settings'));
@@ -31,11 +36,14 @@ class TwitterSiteConfigExtension extends DataExtension {
          * Details
          * ----------------------------------------*/
 
+        $twitterImage = UploadField::create('DefaultTwitterImage', 'Default Twitter Card Image');
+        $twitterImage->setDescription('Ideal size 560px * 750px');
+
         $fields->findOrMakeTab('Root.Settings.TwitterCards');
         $fields->addFieldsToTab('Root.Settings.TwitterCards', array(
             HeaderField::create('', 'Twitter Cards'),
             Textfield::create('DefaultTwitterHandle', 'Default Twitter Handle'),
-            UploadField::create('DefaultTwitterImage', 'Default Twitter Card Image')
+            $twitterImage
         ));
 
     }

@@ -90,14 +90,40 @@ class TwitterCardMeta extends DataExtension
     }
 
     /**
+     * Template helper
+     *
+     * @return mixed
+     */
+    public function getCreatorHandle()
+    {
+        return $this->owner->TwitterCreator ? : SiteConfig::current_site_config()->DefaultTwitterHandle;
+    }
+
+    /**
+     * Controller logic for returning Twitter card image
+     *
+     * @return String
+     */
+    public function getTwitterImageURL()
+    {
+        if ($this->owner->TwitterImage() && $this->owner->TwitterImage()->exists()) {
+            return $this->owner->TwitterImage()->CroppedImage(560, 750)->URL;
+        } elseif ($firstImage = $this->FirstImage()) {
+            return Controller::join_links(Director::absoluteBaseURL(), $firstImage);
+        }
+
+        return '';
+    }
+
+    /**
      * @return string
      */
     public function FirstImage()
     {
         $pattern = ' /<img[^>]+ src[\\s = \'"]';
         $pattern .= '+([^"\'>\\s]+)/is';
-        if (preg_match_all($pattern, $this->owner->Content, $match)) {
-            $imageLink = preg_replace('/_resampled\/resizedimage[0-9]*-/', '', $match[1][0]);
+        if (preg_match($pattern, $this->owner->Content, $match) !== false && !empty($match)) {
+            $imageLink = preg_replace('/_resampled\/resizedimage[0-9]*-/', '', $match[1]);
             return (string)$imageLink;
         } else {
             return '';
