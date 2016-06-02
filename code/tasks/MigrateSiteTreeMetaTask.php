@@ -44,34 +44,36 @@ class MigrateSiteTreeMetaTask extends BuildTask {
          * @var Page $page
         ===========================================*/
 
-        if (Page::has_extension('TwitterCardMeta')) {
-            // Should we overwrite?
-            $overwrite = $request->getVar('overwrite') ? true : false;
+        if (class_exists('Page')) {
+            if (Page::has_extension('TwitterCardMeta')) {
+                // Should we overwrite?
+                $overwrite = $request->getVar('overwrite') ? true : false;
 
-            echo sprintf('Overwrite is %s', $overwrite ? 'enabled' : 'disabled') . $this->eol . $this->eol;
+                echo sprintf('Overwrite is %s', $overwrite ? 'enabled' : 'disabled') . $this->eol . $this->eol;
 
-            $pages = Page::get();
+                $pages = Page::get();
 
-            foreach ($pages as $page) {
+                foreach ($pages as $page) {
 
-                $id = $page->ID;
+                    $id = $page->ID;
 
-                echo $this->hr;
-                echo 'Updating page: ' . $page->Title . $this->eol;
+                    echo $this->hr;
+                    echo 'Updating page: ' . $page->Title . $this->eol;
 
-                foreach ($this->fields_to_update as $fieldName) {
-                    $oldData = DB::query("SELECT {$fieldName} FROM Page WHERE ID = {$id}")->column($fieldName);
+                    foreach ($this->fields_to_update as $fieldName) {
+                        $oldData = DB::query("SELECT {$fieldName} FROM Page WHERE ID = {$id}")->column($fieldName);
 
-                    $newData = DB::query("SELECT {$fieldName} FROM SiteTree WHERE ID = {$id}")->column($fieldName);
+                        $newData = DB::query("SELECT {$fieldName} FROM SiteTree WHERE ID = {$id}")->column($fieldName);
 
-                    if (!empty($oldData)) {
-                        // If new data has been saved and we don't want to overwrite, exit the loop
-                        if (!empty($newData) && $overwrite === false) {
-                            continue;
+                        if (!empty($oldData)) {
+                            // If new data has been saved and we don't want to overwrite, exit the loop
+                            if (!empty($newData) && $overwrite === false) {
+                                continue;
+                            }
+                            DB::query("UPDATE SiteTree SET {$fieldName} = '{$oldData[0]}' WHERE ID = {$id}");
+                        } else {
+                            echo 'Field "' . $fieldName . '" empty.' . $this->eol;
                         }
-                        DB::query("UPDATE SiteTree SET {$fieldName} = '{$oldData[0]}' WHERE ID = {$id}");
-                    } else {
-                        echo 'Field "' . $fieldName . '" empty.' . $this->eol;
                     }
                 }
             }
