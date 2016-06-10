@@ -10,7 +10,6 @@
  */
 class TwitterSiteConfigExtension extends DataExtension
 {
-
     private static $db = array(
         'DefaultTwitterHandle' => 'Varchar(255)'
     );

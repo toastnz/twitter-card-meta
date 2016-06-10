@@ -1,0 +1,20 @@
+<phpunit bootstrap="framework/tests/bootstrap.php" colors="true">
+
+    <testsuite name="Toast Twitter Meta Suite">
+        <directory>./tests</directory>
+    </testsuite>
+
+    <listeners>
+        <listener class="SS_TestListener" file="framework/dev/TestListener.php" />
+    </listeners>
+
+    <groups>
+        <exclude>
+            <group>sanitychecks</group>
+        </exclude>
+    </groups>
+
+    <php>
+        <get name="flush" value="1"/>
+    </php>
+</phpunit>

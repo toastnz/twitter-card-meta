@@ -92,7 +92,7 @@ class TwitterCardMeta extends DataExtension
     /**
      * Template helper
      *
-     * @return mixed
+     * @return string|null
      */
     public function getCreatorHandle()
     {

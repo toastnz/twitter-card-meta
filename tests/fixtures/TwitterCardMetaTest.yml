@@ -1,0 +1,15 @@
+SiteTree:
+  home:
+    ID: 1
+    Title: 'Home'
+    Content: '<p>This is the first paragraph.</p>'
+  about:
+    Title: 'About'
+    TwitterCreator: 'toastnz'
+    TwitterTitle: 'About'
+    TwitterCardType: 'summary_large_image'
+    TwitterDescription: 'Welcome to SilverStripe!'
+
+SiteConfig:
+  default:
+    DefaultTwitterHandle: 'silverstripe'
