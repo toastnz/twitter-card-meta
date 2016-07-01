@@ -154,10 +154,10 @@ class TwitterCardMetaTest extends SapphireTest
          * Test with default
          * ----------------------------------------*/
 
-        $siteConfig->setField('DefaultTwitterImageID', 1);
+        $siteConfig->setField('DefaultTwitterImageID', $defaultTwitterImage->ID);
         $siteConfig->write();
 
         $imageURL = $homePage->getTwitterImageURL();
-        $this->assertEquals($expectedImageURL, $imageURL);
+        $this->assertEquals($siteConfig->DefaultTwitterImage()->CroppedImage(560, 750)->AbsoluteURL, $imageURL);
     }
 }
