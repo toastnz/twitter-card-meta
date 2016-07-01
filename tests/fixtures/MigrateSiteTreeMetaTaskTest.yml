@@ -1,19 +1,15 @@
 Page:
   oldHome:
-    ID: 1
     TwitterTitle: 'Home'
     TwitterDescription: 'Welcome to SilverStripe!'
     TwitterCreator: 'toastnz'
   oldAbout:
-    ID: 2
     TwitterCreator: 'toastnz'
 
 SiteTree:
   newHome:
-    ID: 1
     Title: 'Home'
   newAbout:
-    ID: 2
     Title: 'About'
     TwitterTitle: 'About Us'
     TwitterCreator: 'newtoast'
