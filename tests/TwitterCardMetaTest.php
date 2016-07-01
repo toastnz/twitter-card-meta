@@ -118,6 +118,7 @@ class TwitterCardMetaTest extends SapphireTest
     {
         /** =========================================
          * @var SiteConfig $siteConfig
+         * @var Image $defaultTwitterImage
          * @var TwitterCardMeta|SiteTree $homePage
          * @var TwitterCardMeta|SiteTree $aboutPage
          * ========================================*/
@@ -130,7 +131,7 @@ class TwitterCardMetaTest extends SapphireTest
         $siteConfig->setField('DefaultTwitterImageID', 0);
         $siteConfig->write();
 
-        $expectedImageURL = Controller::join_links(Director::absoluteBaseURL(), ASSETS_DIR, '_resampled/CroppedImage560750-test.jpg');
+        $expectedImageURL = $defaultTwitterImage->CroppedImage(560, 750)->AbsoluteURL;
 
         /** -----------------------------------------
          * Test without default

@@ -120,7 +120,7 @@ class TwitterCardMeta extends DataExtension
             return $this->owner->TwitterImage()->CroppedImage(560, 750)->AbsoluteURL;
         } elseif ($firstImage = $this->getFirstImage()) {
             return Controller::join_links(Director::absoluteBaseURL(), $firstImage);
-        } elseif (SiteConfig::current_site_config()->DefaultTwitterImageID) {
+        } elseif (SiteConfig::current_site_config()->DefaultTwitterImage() && SiteConfig::current_site_config()->DefaultTwitterImage()->exists()) {
             return SiteConfig::current_site_config()->DefaultTwitterImage()->CroppedImage(560, 750)->AbsoluteURL;
         }
 
