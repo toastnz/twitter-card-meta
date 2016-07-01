@@ -4,9 +4,11 @@
         <directory>./tests</directory>
     </testsuite>
 
-    <listeners>
-        <listener class="SS_TestListener" file="framework/dev/TestListener.php" />
-    </listeners>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">/twitter-card-meta/</directory>
+        </whitelist>
+    </filter>
 
     <groups>
         <exclude>
@@ -14,7 +16,7 @@
         </exclude>
     </groups>
 
-    <php>
+    <!--<php>
         <get name="flush" value="1"/>
-    </php>
+    </php>-->
 </phpunit>

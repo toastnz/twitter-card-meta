@@ -2,14 +2,23 @@ SiteTree:
   home:
     ID: 1
     Title: 'Home'
-    Content: '<p>This is the first paragraph.</p>'
+    Content: '<p>Cras luctus. Convallis etiam proin urna, consequat nibh vulputate luctus laoreet venenatis vestibulum malesuada vehicula.</p> <p>Penatibus a sagittis sociosqu ultricies, proin. Vivamus. Massa. Suspendisse augue, mattis potenti. Odio, facilisis. Eu congue sed at euismod.</p> <p>Dolor magna euismod dis sem ullamcorper Consectetuer. Convallis nascetur sociis adipiscing nam ut Lacinia curae; imperdiet interdum lobortis tempus potenti eleifend viverra elementum augue. Sociis praesent.</p>'
   about:
-    Title: 'About'
+    Title: 'About Page'
     TwitterCreator: 'toastnz'
+    TwitterTitle: 'About'
     TwitterTitle: 'About'
     TwitterCardType: 'summary_large_image'
     TwitterDescription: 'Welcome to SilverStripe!'
+    TwitterImageID: 2
+    Content: '<p>Intro</p> <p><img class="leftAlone" title="" src="assets/Uploads/6868265.gif" alt="6868265" width="175" height="175"></p> <p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImage600479-Black.png" alt="Black" width="600" height="479"></p>'
 
-SiteConfig:
+File:
   default:
-    DefaultTwitterHandle: 'silverstripe'
+    ID: 1
+    ClassName: Image
+    Name: test.jpg
+    Title: test
+    Filename: 'twitter-card-meta/tests/images/test.jpg'
+  alt:
+    ID: 2

@@ -8,6 +8,9 @@
  * @property string TwitterTitle
  * @property string TwitterCardType
  * @property string TwitterDescription
+ * @property int TwitterImageID
+ *
+ * @method Image TwitterImage
  */
 class TwitterCardMeta extends DataExtension
 {
@@ -46,14 +49,21 @@ class TwitterCardMeta extends DataExtension
         $fields->addFieldsToTab('Root.Main', ToggleCompositeField::create('Twitter Graph', 'Twitter Card',
             array(
                 LiteralField::create('', '<h2>&nbsp;&nbsp;&nbsp;Twitter Card <img style="position:relative;top:4px;left 4px;" src="' . Director::absoluteBaseURL() . 'twitter-card-meta/images/twitter.png"></h2>'),
-                TextField::create('TwitterCreator', 'Creator Handle')->setAttribute('placeholder', 'e.g @username')->setRightTitle('Twitter account name for the author/creator (Will default to site handle)'),
+                TextField::create('TwitterCreator', 'Creator Handle')
+                    ->setAttribute('placeholder', 'e.g @username')
+                    ->setRightTitle('Twitter account name for the author/creator (Will default to site handle)'),
                 OptionsetField::create('TwitterCardType', 'Twitter Card Type', array(
                     'summary_large_image' => 'summary with large image',
                     'summary' => 'summary',
-                ), 'summary_large_image')->setRightTitle('Choose which type of twitter card you would like this page to share as.'),
-                TextField::create('TwitterTitle', 'Twitter Card Title')->setAttribute('placeholder', 'e.g Description Of Page Content')->setRightTitle('Twitter title to to display on the Twitter card'),
-                TextAreaField::create('TwitterDescription', '')->setRightTitle('Twitter card description goes here, automatically defaults to the content summary'),
-                UploadField::create('TwitterImage', 'Twitter Card Image')->setRightTitle('Will default too the first image in the WYSIWYG editor or banner image if left blank'),
+                ), 'summary_large_image')
+                    ->setRightTitle('Choose which type of twitter card you would like this page to share as.'),
+                TextField::create('TwitterTitle', 'Twitter Card Title')
+                    ->setAttribute('placeholder', 'e.g Description Of Page Content')
+                    ->setRightTitle('Twitter title to to display on the Twitter card'),
+                TextAreaField::create('TwitterDescription', '')
+                    ->setRightTitle('Twitter card description goes here, automatically defaults to the content summary'),
+                UploadField::create('TwitterImage', 'Twitter Card Image')
+                    ->setRightTitle('Will default too the first image in the WYSIWYG editor or banner image if left blank'),
             )
         ));
     }
@@ -71,16 +81,16 @@ class TwitterCardMeta extends DataExtension
 
         $siteConfig = SiteConfig::current_site_config();
 
-        if ($this->owner->isChanged('TwitterDescription') && $this->owner->TwitterDescription == '') {
+        if ($this->owner->isChanged('Content') && !$this->owner->TwitterDescription) {
             $this->owner->setField('TwitterDescription', $this->owner->dbObject('Content')->Summary(50));
         }
-        if ($this->owner->isChanged('TwitterTitle') && $this->owner->TwitterTitle == '') {
+        if ($this->owner->isChanged('Title') && !$this->owner->TwitterTitle) {
             $this->owner->setField('TwitterTitle', $this->owner->Title);
         }
-        if ($this->owner->isChanged('TwitterSite') && $this->owner->TwitterSite == '') {
+        if (!$this->owner->TwitterSite) {
             $this->owner->setField('TwitterSite', $siteConfig->DefaultTwitterHandle);
         }
-        if ($this->owner->isChanged('TwitterCreator') && $this->owner->TwitterCreator == '') {
+        if (!$this->owner->TwitterCreator) {
             $this->owner->setField('TwitterCreator', $siteConfig->DefaultTwitterHandle);
         }
         if (!$this->owner->TwitterImageID) {
@@ -107,9 +117,11 @@ class TwitterCardMeta extends DataExtension
     public function getTwitterImageURL()
     {
         if ($this->owner->TwitterImage() && $this->owner->TwitterImage()->exists()) {
-            return $this->owner->TwitterImage()->CroppedImage(560, 750)->URL;
-        } elseif ($firstImage = $this->FirstImage()) {
+            return $this->owner->TwitterImage()->CroppedImage(560, 750)->AbsoluteURL;
+        } elseif ($firstImage = $this->getFirstImage()) {
             return Controller::join_links(Director::absoluteBaseURL(), $firstImage);
+        } elseif (SiteConfig::current_site_config()->DefaultTwitterImageID) {
+            return SiteConfig::current_site_config()->DefaultTwitterImage()->CroppedImage(560, 750)->AbsoluteURL;
         }
 
         return '';
@@ -118,7 +130,7 @@ class TwitterCardMeta extends DataExtension
     /**
      * @return string
      */
-    public function FirstImage()
+    public function getFirstImage()
     {
         $pattern = ' /<img[^>]+ src[\\s = \'"]';
         $pattern .= '+([^"\'>\\s]+)/is';
