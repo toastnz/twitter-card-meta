@@ -17,9 +17,11 @@ class TwitterCardMetaTest extends SapphireTest
 
         parent::setUp();
 
+        $defaultTwitterImage = $this->objFromFixture('File', 'default');
+
         $siteConfig = SiteConfig::current_site_config();
         $siteConfig->setField('DefaultTwitterHandle', 'silverstripe');
-        $siteConfig->setField('DefaultTwitterImageID', 1);
+        $siteConfig->setField('DefaultTwitterImageID', $defaultTwitterImage->ID);
         $siteConfig->write();
     }
 
@@ -77,6 +79,8 @@ class TwitterCardMetaTest extends SapphireTest
         $homePage = $this->objFromFixture('SiteTree', 'home');
         $homePage->write();
 
+        $defaultTwitterImage = $this->objFromFixture('File', 'default');
+
         $this->assertEquals(
             'Cras luctus. Convallis etiam proin urna, consequat nibh vulputate luctus laoreet venenatis vestibulum malesuada vehicula.',
             $homePage->TwitterDescription
@@ -85,7 +89,7 @@ class TwitterCardMetaTest extends SapphireTest
         $this->assertEquals('Home', $homePage->TwitterTitle);
         $this->assertEquals('silverstripe', $homePage->TwitterCreator);
         $this->assertEquals('silverstripe', $homePage->TwitterSite);
-        $this->assertEquals(1, $homePage->TwitterImageID);
+        $this->assertEquals($defaultTwitterImage->ID, $homePage->TwitterImageID);
 
         /** -----------------------------------------
          * About page
@@ -93,6 +97,8 @@ class TwitterCardMetaTest extends SapphireTest
 
         $aboutPage = $this->objFromFixture('SiteTree', 'about');
         $aboutPage->write();
+
+        $defaultTwitterImage = $this->objFromFixture('File', 'alt');
 
         $this->assertEquals(
             'Welcome to SilverStripe!',
@@ -102,7 +108,7 @@ class TwitterCardMetaTest extends SapphireTest
         $this->assertEquals('About', $aboutPage->TwitterTitle);
         $this->assertEquals('toastnz', $aboutPage->TwitterCreator);
         $this->assertEquals('silverstripe', $aboutPage->TwitterSite);
-        $this->assertEquals(2, $aboutPage->TwitterImageID);
+        $this->assertEquals($defaultTwitterImage->ID, $aboutPage->TwitterImageID);
     }
 
     /**
@@ -117,6 +123,9 @@ class TwitterCardMetaTest extends SapphireTest
          * ========================================*/
 
         $siteConfig = SiteConfig::current_site_config();
+
+        $defaultTwitterImage = $this->objFromFixture('File', 'default');
+
         $siteConfig->setField('DefaultTwitterHandle', '');
         $siteConfig->setField('DefaultTwitterImageID', 0);
         $siteConfig->write();
@@ -135,7 +144,7 @@ class TwitterCardMetaTest extends SapphireTest
         $imageURL = $aboutPage->getTwitterImageURL();
         $this->assertEquals(Controller::join_links(Director::absoluteBaseURL(), 'assets/Uploads/6868265.gif'), $imageURL);
 
-        $aboutPage->setField('TwitterImageID', 1);
+        $aboutPage->setField('TwitterImageID', $defaultTwitterImage->ID);
         $aboutPage->write();
         $imageURL = $aboutPage->getTwitterImageURL();
         $this->assertEquals($expectedImageURL, $imageURL);
