@@ -1,6 +1,7 @@
 ---
 Name: twittercardmeta
 After: 'framework/*','cms/*'
+Before: 'mysite'
 ---
 SiteTree:
   extensions:
