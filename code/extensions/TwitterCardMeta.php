@@ -100,6 +100,13 @@ class TwitterCardMeta extends DataExtension
             }
         }
 
+        if (!$this->owner->TwitterTitle) {
+            $this->owner->setField('TwitterTitle', $this->owner->Title);
+        }
+
+        if (!$this->owner->TwitterDescription) {
+            $this->owner->setField('TwitterDescription', $this->owner->dbObject('Content')->Summary(50));
+        }
     }
 
     /**
