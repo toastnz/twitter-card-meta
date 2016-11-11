@@ -1,7 +1,14 @@
 # Change Log
 ---
 
-## [0.2.1](https://github.com/toastnz/twitter-card-meta/tree/0.2.1)
+## [0.2.2](https://github.com/toastnz/twitter-card-meta/tree/0.2.2) (2016-11-11)
+
+* Fix issue where title "New Page" was automatically saved to Twitter Card
+* Relax CMS / Framework requirement
+
+---
+
+## [0.2.1](https://github.com/toastnz/twitter-card-meta/tree/0.2.1) (2016-07-01)
 
 * Unit testing
 
