@@ -12,7 +12,7 @@
  *
  * @method Image TwitterImage
  *
- * @property SiteTree|TwitterCardMeta $owner
+ * @property SiteTree $owner
  */
 class TwitterCardMeta extends DataExtension
 {
@@ -152,5 +152,51 @@ class TwitterCardMeta extends DataExtension
         }
     }
 
+    /**
+     * @param string $tags
+     */
+    public function MetaTags(&$tags)
+    {
+        /** =========================================
+         * @var TwitterSiteConfigExtension $siteConfig
+        ===========================================*/
+
+        $siteConfig = SiteConfig::current_site_config();
+
+        // Type
+        if ($this->owner->TwitterCardType) {
+            $tags .= sprintf('<meta name="twitter:card" content="%s">', $this->owner->TwitterCardType) . "\n";
+        } else {
+            $tags .= '<meta name="twitter:card" content="summary_large_image">' . "\n";
+        }
+
+        // Site
+        $siteHandle = $this->owner->TwitterSite ? : $siteConfig->DefaultTwitterHandle ? : '';
+        $tags .= sprintf('<meta name="twitter:site" content="%s">', $siteHandle) . "\n";
+
+        // Creator
+        if ($this->owner->TwitterSite) {
+            $tags .= sprintf('<meta name="twitter:creator" content="%s">', $this->owner->TwitterSite) . "\n";
+        } else {
+            $tags .= sprintf('<meta name="twitter:creator" content="%s">', $siteHandle) . "\n";
+        }
+
+        // Title
+        if ($this->owner->TwitterTitle) {
+            $tags .= sprintf('<meta name="twitter:title" content="%s">', $this->owner->TwitterTitle) . "\n";
+        } else {
+            $tags .= sprintf('<meta name="twitter:title" content="%s">', $this->owner->Title) . "\n";
+        }
+
+        // Description
+        $tags .= sprintf('<meta name="twitter:description" content="%s">', $this->owner->TwitterDescription) . "\n";
+
+        // Image
+        $image = $this->owner->getTwitterImageURL();
+
+        $this->owner->extend('updateTwitterImage', $image);
+
+        $tags .= sprintf('<meta name="twitter:image" content="%s">', $image) . "\n";
+    }
 
 }

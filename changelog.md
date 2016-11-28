@@ -1,6 +1,12 @@
 # Change Log
 ---
 
+## [0.2.4](https://github.com/toastnz/twitter-card-meta/tree/0.2.4) (2016-11-28)
+
+* Change from template include to MetaTags extension
+
+---
+
 ## [0.2.2](https://github.com/toastnz/twitter-card-meta/tree/0.2.2) (2016-11-11)
 
 * Fix issue where title "New Page" was automatically saved to Twitter Card
