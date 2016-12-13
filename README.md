@@ -21,10 +21,16 @@ Get the goodness just like so:
  composer require toastnz/twitter-card-meta
 ```
 
-Then add the following to the HEAD of your document
+And ensure you have the following in the `<head>` of your template:
 
 ```
- <% include TwitterCardMeta %>
+ $MetaTags
+```
+
+If you are not using `$MetaTags`, you can use the following template code:
+
+```
+  <% include TwitterCardMeta %>
 ```
 
 Step 4: Profit
