@@ -72,6 +72,7 @@ class MigrateSiteTreeMetaTask extends BuildTask {
                             }
                             $data = Convert::raw2sql($oldData[0]);
                             DB::query("UPDATE SiteTree SET {$fieldName} = '{$data}' WHERE ID = {$id}");
+                            DB::query("UPDATE SiteTree_Live SET {$fieldName} = '{$data}' WHERE ID = {$id}");
                         } else {
                             echo 'Field "' . $fieldName . '" empty.' . $this->eol;
                         }
