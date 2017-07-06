@@ -3,15 +3,6 @@
 /**
  * Class TwitterCardMeta
  *
- * @property string TwitterSite
- * @property string TwitterCreator
- * @property string TwitterTitle
- * @property string TwitterCardType
- * @property string TwitterDescription
- * @property int TwitterImageID
- *
- * @method Image TwitterImage
- *
  * @property SiteTree $owner
  */
 class TwitterCardMeta extends DataExtension
@@ -19,20 +10,20 @@ class TwitterCardMeta extends DataExtension
     /**
      * @var array
      */
-    private static $db = array(
-        'TwitterSite' => 'Varchar(160)',
-        'TwitterCreator' => 'Varchar(160)',
-        'TwitterTitle' => 'Varchar(160)',
-        'TwitterCardType' => 'Varchar(160)',
+    private static $db = [
+        'TwitterSite'        => 'Varchar(160)',
+        'TwitterCreator'     => 'Varchar(160)',
+        'TwitterTitle'       => 'Varchar(160)',
+        'TwitterCardType'    => 'Varchar(160)',
         'TwitterDescription' => 'Varchar(160)'
-    );
+    ];
 
     /**
      * @var array
      */
-    private static $has_one = array(
+    private static $has_one = [
         'TwitterImage' => 'Image'
-    );
+    ];
 
     /**
      * @param FieldList $fields
@@ -48,15 +39,15 @@ class TwitterCardMeta extends DataExtension
         }
 
         $fields->addFieldToTab('Root.Main', ToggleCompositeField::create('Twitter Graph', 'Twitter Card',
-            array(
+            [
                 LiteralField::create('', '<h2>&nbsp;&nbsp;&nbsp;Twitter Card <img style="position:relative;top:4px;left 4px;" src="' . Director::absoluteBaseURL() . 'twitter-card-meta/images/twitter.png"></h2>'),
                 TextField::create('TwitterCreator', 'Creator Handle')
                     ->setAttribute('placeholder', 'e.g @username')
                     ->setRightTitle('Twitter account name for the author/creator (Will default to site handle)'),
-                OptionsetField::create('TwitterCardType', 'Twitter Card Type', array(
+                OptionsetField::create('TwitterCardType', 'Twitter Card Type', [
                     'summary_large_image' => 'summary with large image',
-                    'summary' => 'summary',
-                ), 'summary_large_image')
+                    'summary'             => 'summary',
+                ], 'summary_large_image')
                     ->setRightTitle('Choose which type of twitter card you would like this page to share as.'),
                 TextField::create('TwitterTitle', 'Twitter Card Title')
                     ->setAttribute('placeholder', 'e.g Description Of Page Content')
@@ -65,48 +56,8 @@ class TwitterCardMeta extends DataExtension
                     ->setRightTitle('Twitter card description goes here, automatically defaults to the content summary'),
                 UploadField::create('TwitterImage', 'Twitter Card Image')
                     ->setRightTitle('Will default too the first image in the WYSIWYG editor or banner image if left blank'),
-            )
+            ]
         ));
-    }
-
-    /**
-     * Set up defaults for fields
-     */
-    public function onBeforeWrite()
-    {
-        /** =========================================
-         * @var TwitterSiteConfigExtension $siteConfig
-        ===========================================*/
-
-        parent::onBeforeWrite();
-
-        $siteConfig = SiteConfig::current_site_config();
-
-        if ($this->owner->exists()) {
-            if ($this->owner->isChanged('Content') && !$this->owner->TwitterDescription) {
-                $this->owner->setField('TwitterDescription', $this->owner->dbObject('Content')->Summary(50));
-            }
-            if ($this->owner->isChanged('Title') && !$this->owner->TwitterTitle) {
-                $this->owner->setField('TwitterTitle', $this->owner->Title);
-            }
-            if (!$this->owner->TwitterSite) {
-                $this->owner->setField('TwitterSite', $siteConfig->DefaultTwitterHandle);
-            }
-            if (!$this->owner->TwitterCreator) {
-                $this->owner->setField('TwitterCreator', $siteConfig->DefaultTwitterHandle);
-            }
-            if (!$this->owner->TwitterImageID) {
-                $this->owner->setField('TwitterImageID', $siteConfig->DefaultTwitterImageID);
-            }
-        }
-
-        if (!$this->owner->TwitterTitle) {
-            $this->owner->setField('TwitterTitle', $this->owner->Title);
-        }
-
-        if (!$this->owner->TwitterDescription) {
-            $this->owner->setField('TwitterDescription', $this->owner->dbObject('Content')->Summary(50));
-        }
     }
 
     /**
@@ -116,7 +67,7 @@ class TwitterCardMeta extends DataExtension
      */
     public function getCreatorHandle()
     {
-        return $this->owner->TwitterCreator ? : SiteConfig::current_site_config()->DefaultTwitterHandle;
+        return $this->owner->TwitterCreator ?: SiteConfig::current_site_config()->DefaultTwitterHandle;
     }
 
     /**
@@ -171,8 +122,8 @@ class TwitterCardMeta extends DataExtension
         }
 
         // Site
-        $siteHandle = $this->owner->TwitterSite ? : $siteConfig->DefaultTwitterHandle ? : '';
-        $tags .= sprintf('<meta name="twitter:site" content="%s">', $siteHandle) . "\n";
+        $siteHandle = $this->owner->TwitterSite ?: $siteConfig->DefaultTwitterHandle ?: '';
+        $tags       .= sprintf('<meta name="twitter:site" content="%s">', $siteHandle) . "\n";
 
         // Creator
         if ($this->owner->TwitterSite) {

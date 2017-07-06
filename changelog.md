@@ -1,6 +1,11 @@
 # Change Log
 ---
 
+## [1.0.0](https://github.com/toastnz/twitter-card-meta/tree/1.0.0) (2017-06-28)
+
+* Disable saving Twitter details to database
+* Move to single CMS tab
+
 ## [0.2.4](https://github.com/toastnz/twitter-card-meta/tree/0.2.4) (2016-11-28)
 
 * Change from template include to MetaTags extension
