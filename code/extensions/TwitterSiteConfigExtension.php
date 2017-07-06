@@ -27,8 +27,8 @@ class TwitterSiteConfigExtension extends DataExtension
          * @var UploadField $twitterImage
         ===========================================*/
 
-        if (!$fields->fieldByName('Root.Settings')) {
-            $fields->addFieldToTab('Root', TabSet::create('Settings'));
+        if (!$fields->fieldByName('Root.Metadata')) {
+            $fields->addFieldToTab('Root', TabSet::create('Metadata'));
         }
 
         /** -----------------------------------------
@@ -38,8 +38,8 @@ class TwitterSiteConfigExtension extends DataExtension
         $twitterImage = UploadField::create('DefaultTwitterImage', 'Default Twitter Card Image');
         $twitterImage->setDescription('Ideal size 560px * 750px');
 
-        $fields->findOrMakeTab('Root.Settings.Integrations');
-        $fields->addFieldsToTab('Root.Settings.Integrations', [
+        $fields->findOrMakeTab('Root.Metadata.Twitter');
+        $fields->addFieldsToTab('Root.Metadata.Twitter', [
             HeaderField::create('', 'Twitter Cards'),
             Textfield::create('DefaultTwitterHandle', 'Default Twitter Handle'),
             $twitterImage
