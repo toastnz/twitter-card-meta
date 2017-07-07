@@ -1,5 +1,13 @@
 <?php
 
+use SilverStripe\Assets\Image;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TabSet;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Forms\HeaderField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\DataExtension;
+
 /**
  * Class TwitterSiteConfigExtension
  *
@@ -15,7 +23,7 @@ class TwitterSiteConfigExtension extends DataExtension
     ];
 
     private static $has_one = [
-        'DefaultTwitterImage' => 'Image'
+        'DefaultTwitterImage' => Image::class
     ];
 
     /**
@@ -41,7 +49,7 @@ class TwitterSiteConfigExtension extends DataExtension
         $fields->findOrMakeTab('Root.Metadata.Twitter');
         $fields->addFieldsToTab('Root.Metadata.Twitter', [
             HeaderField::create('', 'Twitter Cards'),
-            Textfield::create('DefaultTwitterHandle', 'Default Twitter Handle'),
+            TextField::create('DefaultTwitterHandle', 'Default Twitter Handle'),
             $twitterImage
         ]);
 

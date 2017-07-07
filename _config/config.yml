@@ -1,0 +1,13 @@
+---
+Name: twittercardmeta
+After:
+  - 'siteconfig/*'
+Before:
+  - 'mysite'
+---
+SilverStripe\CMS\Model\SiteTree:
+  extensions:
+    - TwitterCardMeta
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - TwitterSiteConfigExtension

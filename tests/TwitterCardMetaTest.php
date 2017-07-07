@@ -1,5 +1,12 @@
 <?php
 
+use SilverStripe\Assets\File;
+use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Director;
+use SilverStripe\Control\Controller;
+use SilverStripe\Dev\SapphireTest;
+
 /**
  * Class TwitterCardMetaTest
  *
@@ -17,7 +24,7 @@ class TwitterCardMetaTest extends SapphireTest
 
         parent::setUp();
 
-        $defaultTwitterImage = $this->objFromFixture('File', 'default');
+        $defaultTwitterImage = $this->objFromFixture(File::class, 'default');
 
         $siteConfig = SiteConfig::current_site_config();
         $siteConfig->setField('DefaultTwitterHandle', 'silverstripe');
@@ -34,11 +41,11 @@ class TwitterCardMetaTest extends SapphireTest
          * @var TwitterCardMeta|SiteTree $aboutPage
          * ========================================*/
 
-        $aboutPage = $this->objFromFixture('SiteTree', 'about');
+        $aboutPage = $this->objFromFixture(SiteTree::class, 'about');
         $handle = $aboutPage->getCreatorHandle();
         $this->assertEquals('toastnz', $handle);
 
-        $aboutPage = $this->objFromFixture('SiteTree', 'home');
+        $aboutPage = $this->objFromFixture(SiteTree::class, 'home');
         $handle = $aboutPage->getCreatorHandle();
         $this->assertEquals('silverstripe', $handle);
     }
@@ -53,11 +60,11 @@ class TwitterCardMetaTest extends SapphireTest
          * @var TwitterCardMeta|SiteTree $homePage
          * ========================================*/
 
-        $aboutPage = $this->objFromFixture('SiteTree', 'about');
+        $aboutPage = $this->objFromFixture(SiteTree::class, 'about');
         $firstImage = $aboutPage->getFirstImage();
         $this->assertEquals('assets/Uploads/6868265.gif', $firstImage);
 
-        $homePage = $this->objFromFixture('SiteTree', 'home');
+        $homePage = $this->objFromFixture(SiteTree::class, 'home');
         $firstImage = $homePage->getFirstImage();
         $this->assertEquals('', $firstImage, 'Found a result when there should be none');
     }
@@ -76,10 +83,10 @@ class TwitterCardMetaTest extends SapphireTest
          * Homepage
          * ----------------------------------------*/
 
-        $homePage = $this->objFromFixture('SiteTree', 'home');
+        $homePage = $this->objFromFixture(SiteTree::class, 'home');
         $homePage->write();
 
-        $defaultTwitterImage = $this->objFromFixture('File', 'default');
+        $defaultTwitterImage = $this->objFromFixture(File::class, 'default');
 
         $this->assertEquals(
             'Cras luctus. Convallis etiam proin urna, consequat nibh vulputate luctus laoreet venenatis vestibulum malesuada vehicula.',
@@ -95,10 +102,10 @@ class TwitterCardMetaTest extends SapphireTest
          * About page
          * ----------------------------------------*/
 
-        $aboutPage = $this->objFromFixture('SiteTree', 'about');
+        $aboutPage = $this->objFromFixture(SiteTree::class, 'about');
         $aboutPage->write();
 
-        $defaultTwitterImage = $this->objFromFixture('File', 'alt');
+        $defaultTwitterImage = $this->objFromFixture(File::class, 'alt');
 
         $this->assertEquals(
             'Welcome to SilverStripe!',
@@ -125,7 +132,7 @@ class TwitterCardMetaTest extends SapphireTest
 
         $siteConfig = SiteConfig::current_site_config();
 
-        $defaultTwitterImage = $this->objFromFixture('File', 'default');
+        $defaultTwitterImage = $this->objFromFixture(File::class, 'default');
 
         $siteConfig->setField('DefaultTwitterHandle', '');
         $siteConfig->setField('DefaultTwitterImageID', 0);
@@ -137,11 +144,11 @@ class TwitterCardMetaTest extends SapphireTest
          * Test without default
          * ----------------------------------------*/
 
-        $homePage = $this->objFromFixture('SiteTree', 'home');
+        $homePage = $this->objFromFixture(SiteTree::class, 'home');
         $imageURL = $homePage->getTwitterImageURL();
         $this->assertEquals('', $imageURL);
 
-        $aboutPage = $this->objFromFixture('SiteTree', 'about');
+        $aboutPage = $this->objFromFixture(SiteTree::class, 'about');
         $imageURL = $aboutPage->getTwitterImageURL();
         $this->assertEquals(Controller::join_links(Director::absoluteBaseURL(), 'assets/Uploads/6868265.gif'), $imageURL);
 

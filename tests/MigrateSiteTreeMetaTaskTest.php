@@ -1,5 +1,8 @@
 <?php
 
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Dev\SapphireTest;
+
 /**
  * Class MigrateSiteTreeMetaTaskTest
  *

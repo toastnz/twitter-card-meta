@@ -1,5 +1,18 @@
 <?php
 
+use SilverStripe\Assets\Image;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Control\Director;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\OptionsetField;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Forms\ToggleCompositeField;
+use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\Control\Controller;
+use SilverStripe\ORM\DataExtension;
+
 /**
  * Class TwitterCardMeta
  *
@@ -22,7 +35,7 @@ class TwitterCardMeta extends DataExtension
      * @var array
      */
     private static $has_one = [
-        'TwitterImage' => 'Image'
+        'TwitterImage' => Image::class
     ];
 
     /**

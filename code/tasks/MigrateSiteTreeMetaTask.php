@@ -1,5 +1,10 @@
 <?php
 
+use SilverStripe\Control\Director;
+use SilverStripe\ORM\DB;
+use SilverStripe\Core\Convert;
+use SilverStripe\Dev\BuildTask;
+
 /**
  * Class MigrateSiteTreeMetaTask
  */
