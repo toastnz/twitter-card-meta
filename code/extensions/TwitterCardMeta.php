@@ -91,11 +91,11 @@ class TwitterCardMeta extends DataExtension
     public function getTwitterImageURL()
     {
         if ($this->owner->TwitterImage() && $this->owner->TwitterImage()->exists()) {
-            return $this->owner->TwitterImage()->CroppedImage(560, 750)->AbsoluteURL;
+            return $this->owner->TwitterImage()->Fit(560, 750)->AbsoluteURL;
         } elseif ($firstImage = $this->getFirstImage()) {
             return Controller::join_links(Director::absoluteBaseURL(), $firstImage);
         } elseif (SiteConfig::current_site_config()->DefaultTwitterImage() && SiteConfig::current_site_config()->DefaultTwitterImage()->exists()) {
-            return SiteConfig::current_site_config()->DefaultTwitterImage()->CroppedImage(560, 750)->AbsoluteURL;
+            return SiteConfig::current_site_config()->DefaultTwitterImage()->Fit(560, 750)->AbsoluteURL;
         }
 
         return '';
@@ -153,7 +153,11 @@ class TwitterCardMeta extends DataExtension
         }
 
         // Description
-        $tags .= sprintf('<meta name="twitter:description" content="%s">', $this->owner->TwitterDescription) . "\n";
+        if ($this->owner->TwitterDescription) {
+            $tags .= sprintf('<meta name="twitter:description" content="%s">', $this->owner->TwitterDescription) . "\n";
+        } else {
+            $tags .= sprintf('<meta name="twitter:description" content="%s">', $this->owner->dbObject('Content')->FirstParagraph()) . "\n";
+        }
 
         // Image
         $image = $this->owner->getTwitterImageURL();
